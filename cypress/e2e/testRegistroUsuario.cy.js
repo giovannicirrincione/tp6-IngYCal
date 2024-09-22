@@ -1,4 +1,4 @@
-describe('registro usuario', () => {
+describe('Registro usuario', () => {
   it('se deberia registrar correctamente un nuevo usuario', () => {
     //acceder a la pagina
     cy.visit('https://thinking-tester-contact-list.herokuapp.com/')
@@ -19,4 +19,23 @@ describe('registro usuario', () => {
     //verificar si fue exitoso
     cy.contains('Contact List').should('be.visible');
   })
+
+  it('Deberia mostrar error al enviar el formulario con una contraseña de longitud menor a 7', () => {
+    
+    //acceder a la pagina de registro de usuario
+    cy.visit('https://thinking-tester-contact-list.herokuapp.com/addUser')
+
+    //completa el formulario de registro con una contraseña menor a 7 digitos
+    cy.get('#firstName').type('TestFirstName');
+    cy.get('#lastName').type('TestLastName');
+    cy.get('#email').type('giovanni@example.com');
+    cy.get('#password').type('123');
+
+    //enviar formulario
+    cy.get('#submit').click();
+
+    //verificar si muestra un error
+    cy.get('#error').should('be.visible')
+  });
+
 })
