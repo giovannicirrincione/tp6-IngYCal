@@ -38,4 +38,21 @@ describe('Registro usuario', () => {
     cy.get('#error').should('be.visible')
   });
 
+
+  it('Debe mostrar un error cuando el nombre está vacío', () => {
+    // Visitar la página de registro
+    cy.visit('https://thinking-tester-contact-list.herokuapp.com/addUser');
+    
+    // Rellenar los campos de email y contraseña
+    cy.get('#lastName').type('Pelegrina');
+    cy.get('#email').type('theopelegrina@gmail.com');
+    cy.get('#password').type('contraseña123');
+
+    // Dejar vacío el campo de nombre y hacer submit
+    cy.get('button[type="submit"]').click();
+
+    // Verificar que aparece el mensaje de error
+    cy.contains('User validation failed: firstName: Path `firstName` is required.').should('be.visible');
+  });
+
 })
